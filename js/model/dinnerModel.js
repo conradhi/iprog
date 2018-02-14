@@ -35,12 +35,9 @@ var DinnerModel = function() {
 
 	this.setNumberOfGuests = function(num) {
 		//TODO Lab 1
-		if(numberOfGuests <= 0){
-			numberOfGuests = 0;
-		}
-		else{
-			numberOfGuests = num;
-		}
+		
+		numberOfGuests = num;
+
 
 		// Lab 3: notifies the observer that looks for this string
 		if(dishSelected){
