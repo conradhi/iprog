@@ -1,38 +1,68 @@
 var AllDishesView = function (container, model) {
 
 	var all = container.find("#all");
-	var allDishes = model.getAllDishes("dessert");
-
-
-	var allDishesHtml = "<div class='row'>";
+	var allDishes = model.getAllDishes("starter");
+	var dishId = "";
 
 
 
-	for (key in allDishes) { 
+	var allDishesHtml = "";
+
+	for (var i = 0; i < allDishes.length; i++) { 
 
 		allDishesHtml += "<div class='col-sm-4 col-12'>" + 
 							"<div class='col-12 text-center'>" + 
-								"<a href='foodInfo.html'>" + 
-									"<img src='images/"+ allDishes[key].image + "'>" +
+								"<a>" + 
+									"<img  id='" + allDishes[i].id + "' src='images/"+ allDishes[i].image + "'>" +
 								"</a>" + 
 							"</div>" +
 
 							"<div class='col-12' style='text-align: center;'>" +
 								
-									"<h3>" + allDishes[key].name + "<h3>" +
-								
-								//"<a class='btn btn-primary' href='foodInfo.html' role='button'>" + allDishes[key].name + "</a>" + 
+									"<h3>" + allDishes[i].name + "<h3>" +
+										
 							"</div>" +
 						"</div>";
-
     }
 
-	allDishesHtml += "</div>";
-
-
-
-
-
-
 	all.html(allDishesHtml);
+
+
+	this.update = function(model, changeDetails){
+
+		allDishesHtml = "";
+		allDishes = model.getAllDishes(model.getSelectedType());
+
+		if (changeDetails === "type") {
+			for (var i = 0; i < allDishes.length; i++) { 
+
+				allDishesHtml += "<div class='col-sm-4 col-12'>" + 
+									"<div class='col-12 text-center'>" + 
+										"<a>" + 
+											"<img  id='" + allDishes[i].id + "' src='images/"+ allDishes[i].image + "'>" +
+										"</a>" + 
+									"</div>" +
+
+									"<div class='col-12' style='text-align: center;'>" +
+										
+											"<h3>" + allDishes[i].name + "<h3>" +
+										
+									"</div>" +
+								"</div>";
+    		}
+
+			all.html(allDishesHtml);
+		}
+	}
+
+	model.addObserver(this.update);
+
+
+	
+
+
+
+
+
+
 }

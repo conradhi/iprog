@@ -4,16 +4,80 @@ var DinnerModel = function() {
 	// and selected dishes for the dinner menu
 	var numberOfGuests = 1;
 	var menu = []; //this stores only id's of dishes in our current menu
+	var observers = [];
+	var selectedDishType = "starter";
+	var dishSelected = false;
+
+
+
+
+	// Lab 3: views calls this to add an observer
+    this.addObserver = function(observer){ 
+    	observers.push(observer); 
+    }
+   
+   // Lab 3: the functions in model.js call this to notify the observers
+    this.notifyObservers = function(details){ 
+        for(var i = 0; i < observers.length; i++)
+
+        	// a string is passed (details) so the correct observer/view starts an update
+    		observers[i](this, details);
+    }
+
+    this.dinnerView = function(){
+    	this.notifyObservers("dinnerView");
+    }
+
+    this.print = function(){
+    	this.notifyObservers("print");
+    }
+
 
 	this.setNumberOfGuests = function(num) {
 		//TODO Lab 1
-		numberOfGuests = num;
+		if(numberOfGuests <= 0){
+			numberOfGuests = 0;
+		}
+		else{
+			numberOfGuests = num;
+		}
+
+		// Lab 3: notifies the observer that looks for this string
+		if(dishSelected){
+			this.notifyObservers("numberOfGuests");
+		}
+		this.notifyObservers("menu");
 	}
 	
 	this.getNumberOfGuests = function() {
 		//TODO Lab 1
 		return numberOfGuests;
 	}
+
+	this.updateMenu = function(){
+		this.notifyObservers("menu");
+	}
+
+	this.setSelectedType = function(type){
+		selectedDishType = type;
+		this.notifyObservers("type");
+	}
+
+	this.getSelectedType = function(){
+		return selectedDishType;
+	}
+
+	this.setSelectedDishId = function(id){
+    	dishSelected = true;
+    	selectedDishId = id;
+
+    	this.notifyObservers("selectedDishId");
+    	this.notifyObservers("numberOfGuests");
+    }
+
+    this.getSelectedDishId = function(){
+    	return selectedDishId;
+    }
 
 	//Returns the dish that is on the menu for selected type 
 	this.getSelectedDish = function(type) {
