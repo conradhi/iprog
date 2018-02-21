@@ -4,8 +4,9 @@ var DinnerModel = function() {
 	var numberOfGuests = 1;
 	var menu = []; //this stores only id's of dishes in our current menu
 	var observers = [];
-	var selectedDishType = "starter";
+	var selectedDishType = "all";
 	var dishSelected = false;
+	var searchValue = "";
 
 
 
@@ -54,9 +55,18 @@ var DinnerModel = function() {
 		this.notifyObservers("menu");
 	}
 
+	this.search = function(value){
+		searchValue = value;
+		this.notifyObservers("search");
+	}
+
+	this.getSearchValue = function(){
+		return searchValue;
+	}
+
 	this.setSelectedType = function(type){
 		selectedDishType = type;
-		this.notifyObservers("type");
+		this.notifyObservers("search");
 	}
 
 	this.getSelectedType = function(){

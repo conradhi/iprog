@@ -6,212 +6,93 @@ $(function() {
 	
 	// And create the instance of ExampleView
 	var navView = new NavView($("#navView"), model);
-	var navController = new NavController(navView, model);// Lab 3: creates the controller that handles the eventlistener
+	var navController = new NavController(navView, model, this);// Lab 3: creates the controller that handles the eventlistener
 
-	var allDishesView = new AllDishesView($("#allDishesView"), model);
-	var allDishesController = new AllDishesController(allDishesView, model);
+	var allDishesView = new AllDishesView($("#allDishesView"), model, this);
+	var serchController = new SearchController(allDishesView, model, this);
 
 	var foodInfoView = new FoodInfoView($("#foodInfoView"), model);
-	var infoController = new InfoController(foodInfoView, model);
+	var infoController = new InfoController(foodInfoView, model, this);
+
+	var startView = new StartView($("#startView"), model);
+	var startController = new StartController(startView, model, this);
 
 	var dinnerView = new DinnerView($("#dinnerView"), model);
+	var dinnerController = new DinnerController(dinnerView, model, this);
+
 	var printView = new PrintView($("#printView"), model);
+	var printController = new PrintController(printView, model, this);
 
-	var startersButton = document.getElementById("startersButton");
-	startersButton.addEventListener("click", function(){
-		model.setSelectedType("starter");
-		setStartersListeners();
-		
-	}, false);
+	this.showDishDetails = function(id){
+		model.setSelectedDishId(id);
+		hideAllViews();
+		var div = document.getElementById("leftContainer");
+		div.style.display = "block";
+		var div = document.getElementById("foodInfoView");
+		div.style.display = "block";
+	}
 
-	var mainDishButton = document.getElementById("mainDishButton");
-	mainDishButton.addEventListener("click", function(){
-		model.setSelectedType("main dish");
-		setMainDishListeners();
-	}, false);
-
-	var dessertButton = document.getElementById("dessertButton");
-	dessertButton.addEventListener("click", function(){
-		model.setSelectedType("dessert");
-		setDessertListeners();
-	}, false);
-			
-	var newDinnerBtn = document.getElementById("newDinnerBtn");
-	newDinnerBtn.addEventListener("click", function(){
-		setStartersListeners();
-		var div = document.getElementById("landingPage")
+	var hideAllViews = function (){
+		var div = document.getElementById("startView")
 		div.style.display = "none";
 
 		var div = document.getElementById("leftContainer");
-		div.style.display = "block";
+		div.style.display = "none";
 
 		var div = document.getElementById("allDishesView");
+		div.style.display = "none";
+
+		var div = document.getElementById("foodInfoView");
+		div.style.display = "none";
+
+		var div = document.getElementById("printView");
+		div.style.display = "none";
+
+		var div = document.getElementById("dinnerView");
+		div.style.display = "none";
+	}
+
+	this.showAllDishesView = function(){
+		hideAllViews();
+		var div = document.getElementById("allDishesView");
 		div.style.display = "block";
-	}, false);
 
-	var setStartersListeners = function(){
-		var allDishes = model.getAllDishes("starter");
-		// adds a new listener for every image on allDishesView
-		for (var i = 0; i < allDishes.length; i++) {
-			var foodImageBtn = document.getElementById(allDishes[i].id);
-			foodImageBtn.addEventListener("click", function(){
-				model.setSelectedDishId(this.id);
-				var div = document.getElementById("allDishesView");
-				div.style.display = "none";
-
-				
-				var div = document.getElementById("foodInfoView");
-				div.style.display = "block";
-
-			
-			}, false);
-		}
+		var div = document.getElementById("leftContainer");
+		div.style.display = "block";
 	}
 
-	var setMainDishListeners = function (){
-		var allDishes = model.getAllDishes("main dish");
-		// adds a new listener for every image on allDishesView
-		for (var i = 0; i < allDishes.length; i++) {
-			var foodImageBtn = document.getElementById(allDishes[i].id);
-			foodImageBtn.addEventListener("click", function(){
-				model.setSelectedDishId(this.id);
-				var div = document.getElementById("allDishesView");
-				
-				div.style.display = "none";
-
-				var div = document.getElementById("foodInfoView");
-				div.style.display = "block";
-			}, false);
-		}
+	this.showDinnerView = function(){
+		hideAllViews();
+		var div = document.getElementById("dinnerView");
+		div.style.display = "block";
 	}
 
-	var setDessertListeners = function (){
-		allDishes = model.getAllDishes("dessert");
-		// adds a new listener for every image on allDishesView
-		for (var i = 0; i < allDishes.length; i++) {
-			var foodImageBtn = document.getElementById(allDishes[i].id);
-			foodImageBtn.addEventListener("click", function(){
-				model.setSelectedDishId(this.id);
-				var div = document.getElementById("allDishesView");
-				
-				div.style.display = "none";
+	this.showFoodInfoView = function(){
+		hideAllViews();
+		var div = document.getElementById("foodInfoView");
+		div.style.display = "block";
 
-				var div = document.getElementById("foodInfoView");
-				div.style.display = "block";
-			}, false);
-		}
+		var div = document.getElementById("leftContainer");
+		div.style.display = "block";
+	}
+
+	this.showNavView = function(){
+		hideAllViews();
+		var div = document.getElementById("leftContainer");
+		div.style.display = "block";
+	}
+
+	this.showPrintView = function(){
+		hideAllViews();
+		var div = document.getElementById("printView");
+		div.style.display = "block";
 	}
 
 
-var addToMenuBtn = document.getElementById("addToMenuBtn");
-	addToMenuBtn.addEventListener("click", function(){
-		var div = document.getElementById("foodInfoView");
+	$("#searchText").keyup(function(){
+		model.search($(this).val());
+	});
 
-			model.addDishToMenu(model.getSelectedDishId());
-			model.updateMenu();
-			div.style.display = "none";
-
-			var div = document.getElementById("dinnerView");
-			div.style.display = "none";
-
-			var div = document.getElementById("printView");
-			div.style.display = "none";
-
-			var div = document.getElementById("leftContainer");
-			div.style.display = "block";
-
-			var div = document.getElementById("allDishesView");
-			div.style.display = "block";
-	}, false);
-
-	
-	
-
-	var backToSearchBtn = document.getElementById("backBtn");
-	backToSearchBtn.addEventListener("click", function(){
-		var div = document.getElementById("foodInfoView");
-			div.style.display = "none";
-
-			var div = document.getElementById("dinnerView");
-			div.style.display = "none";
-
-			var div = document.getElementById("printView");
-			div.style.display = "none";
-
-			var div = document.getElementById("leftContainer");
-			div.style.display = "block";
-
-			var div = document.getElementById("allDishesView");
-			div.style.display = "block";
-	}, false);
-
-	var confirmDinnerBtn = document.getElementById("confirmDinnerBtn");
-	confirmDinnerBtn.addEventListener("click", function(){
-		var div = document.getElementById("foodInfoView");
-			model.dinnerView();
-			var div = document.getElementById("leftContainer");
-			div.style.display = "none";
-
-			var div = document.getElementById("allDishesView");
-			div.style.display = "none";
-
-			var div = document.getElementById("foodInfoView");
-			div.style.display = "none";
-
-			var div = document.getElementById("dinnerView");
-			div.style.display = "block";
-	}, false);
-
-	var printBtn = document.getElementById("printBtn");
-	printBtn.addEventListener("click", function(){
-		model.print();
-		var div = document.getElementById("foodInfoView");
-			var div = document.getElementById("dinnerView");
-			div.style.display = "none";
-
-			var div = document.getElementById("printView");
-			div.style.display = "block";
-	}, false);
-
-	var editBtn = document.getElementById("editBtn");
-	editBtn.addEventListener("click", function(){
-		var div = document.getElementById("foodInfoView");
-			var div = document.getElementById("foodInfoView");
-			div.style.display = "none";
-
-			var div = document.getElementById("dinnerView");
-			div.style.display = "none";
-
-			var div = document.getElementById("printView");
-			div.style.display = "none";
-
-			var div = document.getElementById("leftContainer");
-			div.style.display = "block";
-
-			var div = document.getElementById("allDishesView");
-			div.style.display = "block";
-	}, false);
-
-	var editBtn2 = document.getElementById("editBtn2");
-	editBtn2.addEventListener("click", function(){
-		var div = document.getElementById("foodInfoView");
-			var div = document.getElementById("foodInfoView");
-			div.style.display = "none";
-
-			var div = document.getElementById("dinnerView");
-			div.style.display = "none";
-
-			var div = document.getElementById("printView");
-			div.style.display = "none";
-
-			var div = document.getElementById("leftContainer");
-			div.style.display = "block";
-
-			var div = document.getElementById("allDishesView");
-			div.style.display = "block";
-	}, false);
-
-		
 	/**
 	 * IMPORTANT: app.js is the only place where you are allowed to
 	 * use the $('someSelector') to search for elements in the whole HTML.

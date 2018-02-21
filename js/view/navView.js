@@ -2,6 +2,7 @@ var NavView = function(container, model){
 
 	this.plusButton = container.find("#plusBtn");
 	this.minusButton = container.find("#minusBtn");
+	this.confirmDinnerBtn = container.find("#confirmDinnerBtn");
 
 	var numberOfGuests = container.find("#numberOfGuests");
 	numberOfGuests.html(model.getNumberOfGuests);
@@ -25,6 +26,7 @@ var NavView = function(container, model){
 		}
 
 		else if(changeDetails === "menu"){
+			numberOfGuests.html(model.getNumberOfGuests);
 			for(var i = 0; i < dishes.length; i++){
 					var tempDish = dishes[i];
 					leftMenuHtml += '<div class="col-10">' + 

@@ -24,7 +24,7 @@
 
 		<!--================================================================== landingPage start ==================================================================-->
 
-		<div class="jumbotron" id="landingPage">
+		<div class="jumbotron" id="startView">
 			<div class="row justify-content-center text-center">
 
 				<div class="col-12 col-md-4">
@@ -113,7 +113,7 @@
 					<div class="col-sm-4" style="margin-top: 10px;">				
 						<form>
 						    <div>
-						    	<input type="text" class="form-control" placeholder="Enter keywords">
+						    	<input id="searchText" type="text" class="form-control" placeholder="Enter keywords" onkeypress="return event.keyCode != 13">
 						    </div>
 						</form>
 					</div>
@@ -124,14 +124,11 @@
 					    </button>
 
 					    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+					    	<a class="dropdown-item" id="allButton">All</a>
 					      	<a class="dropdown-item" id="startersButton">Starters</a>
 					      	<a class="dropdown-item" id="mainDishButton">Main dish</a>
 					      	<a class="dropdown-item" id="dessertButton">Dessert</a>
 					    </div>
-					</div>
-
-					<div class="btn-group">
-					    <button type="button" class="btn btn-secondary">Search</button>
 					</div>
 
 				</div>
@@ -328,13 +325,21 @@
 	<script src="js/controllers/navController.js"></script>	
 
 	<script src="js/view/allDishesView.js"></script>
-	<script src="js/controllers/allDishesController.js"></script>	
+	<script src="js/controllers/searchController.js"></script>	
 
 	<script src="js/view/foodInfoView.js"></script>
 	<script src="js/controllers/infoController.js"></script>
 
+	<script src="js/view/startView.js"></script>
+	<script src="js/controllers/startController.js"></script>
+
 	<script src="js/view/dinnerView.js"></script>
+	<script src="js/controllers/dinnerController.js"></script>
+
 	<script src="js/view/printView.js"></script>
+	<script src="js/controllers/printController.js"></script>
+
+	<script src="js/controllers/dishController.js"></script>
 
 	<!-- TODO: Here you should include JS code for your other views -->
   </body>

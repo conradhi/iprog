@@ -1,5 +1,7 @@
 var PrintView = function(container, model){
 
+	this.editBtn2 = container.find("#editBtn2");
+
 	var numberOfGuests = container.find("#numberOfGuests");
 	var menu = container.find("#menu");
 
@@ -13,7 +15,6 @@ var PrintView = function(container, model){
 			menuHtml = "";
 
 			currentMenu = model.getFullMenu();
-			console.log(currentMenu);
 			for (var i = 0; i < currentMenu.length; i++) {
 				var tempDish = currentMenu[i];
 

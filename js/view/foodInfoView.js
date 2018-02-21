@@ -1,5 +1,8 @@
 var FoodInfoView = function (container, model) {
 
+	this.addToMenuBtn = container.find("#addToMenuBtn");
+	this.backBtn = container.find("#backBtn");
+
 	var info = container.find("#info");
 	var recipe = container.find("#recipe");
 	//var id = model.getSelectedDishId();
